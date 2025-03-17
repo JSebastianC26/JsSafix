@@ -94,3 +94,155 @@ safix.ultimoItemFocus
 - Mayo 05 2023: Creación inicial del archivo global (Johan Cardona)
 - Mayo 06 2023: Adición de módulo para ejecución de eventos (Sramirez)
 - Febrero 14 2025: Modificación de función para último item con focus (Johan Cardona) 
+
+
+# Módulo safix.procesos.js
+
+## Descripción
+Este módulo contiene una colección de funciones reutilizables para el manejo de procesos en la aplicación. Fue creado por Johan Cardona y ha sido actualizado en varias ocasiones, incluyendo la última actualización en marzo de 2025.
+
+## Historial de Cambios
+- Mayo 05 2023: Creación inicial del módulo de funciones reutilizables
+- Feb 14 2025: Agregada función para control de enfoque en los items
+- Mar 07 2025: Agregadas nuevas funciones para manejo de estilos y control de elementos
+
+## Estructura del Módulo
+
+### Listas Reutilizables (`procesos.listas`)
+
+#### tiposEnmascaramientos
+```javascript
+{
+    "$": "pesos",
+    "€": "euros",
+    "D": "dolares",
+    "#": "ninguno",
+    "P": "ninguno"
+}
+```
+
+#### regionesMoneda
+```javascript
+{
+    dolares: "en-US",
+    pesos: "es-CO",
+    euros: "es-ES"
+}
+```
+
+#### monedas
+```javascript
+{
+    dolares: "USD",
+    pesos: "COP",
+    euros: "EUR"
+}
+```
+
+## Funciones Principales
+
+### 1. ObtenerMascara
+```javascript
+procesos.obtenerMascara(tipoMascara)
+```
+Obtiene el tipo de máscara que se va a aplicar.
+- **Parámetros:**
+  - `tipoMascara`: Tipo de máscara requerida (dolares, pesos, etc.)
+- **Retorna:** Objeto JSON con la máscara
+
+### 2. EnmascararValores
+```javascript
+procesos.EnmascararValores(region, moneda, pValor)
+```
+Enmascara valores numéricos según la región y moneda especificadas.
+- **Parámetros:**
+  - `region`: Región del intercambio de moneda
+  - `moneda`: Tipo de moneda
+  - `pValor`: Valor a convertir
+
+### 3. ArmarParametrosX01
+```javascript
+procesos.ArmarParametrosX01()
+```
+Obtiene todos los valores de los items de una página.
+- **Retorna:** JSON string con key = Nombre del campo, Value = Su valor
+
+### 4. datosGridFilaSeleccionada
+```javascript
+procesos.datosGridFilaSeleccionada()
+```
+Arma JSON con los datos de un grid en la fila seleccionada.
+- **Retorna:** Objeto con los datos de la fila seleccionada
+
+### 5. Redirecionamiento
+```javascript
+procesos.redirecionamiento(TipoLink, link)
+```
+Función para redireccionar a otras páginas modales o normales.
+- **Parámetros:**
+  - `TipoLink`: Tipo de página destino ("MODAL" o "NORMAL")
+  - `link`: Link destino
+
+### 6. Control de Formularios
+- `procesos.limpiarFormulario()`: Limpia formularios
+- `procesos.desabilitarItem(item)`: Deshabilita items
+- `procesos.habilitarItems(item)`: Habilita items
+- `procesos.pintarItem(item, color)`: Pinta items de un formulario
+
+### 7. Hipervínculos
+```javascript
+procesos.hipervinculos(idItem)
+```
+Funcionalidad de hipervínculos para diferentes templates configurados.
+- **Parámetros:**
+  - `idItem`: ID del item o del hipervínculo
+
+### 8. Asignaciones
+- `procesos.asignaciones(res)`: Asigna valores a todos los items de una página
+- `procesos.asignaciones2(res)`: Asigna valores sin ejecutar acción dinámica
+
+### 9. Utilidades
+- `procesos.mensajesConsola`: Manejo de consola configurable
+- `procesos.xml_To_Json(DataXml)`: Conversión de XML a JSON
+- `procesos.mostrarRegion(idRegion)`: Refresca y muestra regiones
+- `procesos.tomarItemsNoNulos()`: Arma JSON string con items no nulos
+- `procesos.listarInputsVisibles()`: Retorna items visibles en pantalla
+- `procesos.recuperarEnfoque()`: Recupera el enfoque en items nulos
+
+### 10. Control de Estilos
+```javascript
+procesos.insertarEstiloPersonalizado(idObjetivo, textoContenido, opciones)
+```
+Inserta reglas de estilo personalizadas.
+- **Parámetros:**
+  - `idObjetivo`: ID del elemento
+  - `textoContenido`: Texto a mostrar
+  - `opciones`: Configuración adicional de estilos
+
+### 11. Control de Elementos
+```javascript
+procesos.controlarElemento(idElemento, inhabilitar, opciones)
+```
+Inhabilita o habilita elementos de entrada con estilos personalizados.
+- **Parámetros:**
+  - `idElemento`: ID del elemento
+  - `inhabilitar`: Boolean para inhabilitar/habilitar
+  - `opciones`: Configuración visual adicional
+
+## Uso
+```javascript
+// Ejemplo de uso básico
+safix.procesos.EnmascararValores('es-CO', 'COP', 1234567898);
+
+// Ejemplo de control de elemento
+const control = safix.procesos.controlarElemento('miElemento', true, {
+    colorTexto: '#000000',
+    colorFondo: '#f0f0f0'
+});
+```
+
+## Notas
+- El módulo utiliza jQuery para algunas operaciones
+- Requiere la existencia de variables globales como `paginaActual` y `aplicacionActual`
+- Incluye manejo de errores y logging configurable
+- Soporta internacionalización para diferentes monedas y regiones 
